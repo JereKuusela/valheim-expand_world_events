@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using ExpandWorldData;
 using HarmonyLib;
+using Service;
 using UnityEngine;
 
 namespace ExpandWorld.Event;

@@ -4,12 +4,13 @@ using System.IO;
 using System.Linq;
 using ExpandWorldData;
 using HarmonyLib;
+using Service;
 namespace ExpandWorld.Event;
 
 public class Manager
 {
   public static string FileName = "expand_events.yaml";
-  public static string FilePath = Path.Combine(EWD.YamlDirectory, FileName);
+  public static string FilePath = Path.Combine(Yaml.Directory, FileName);
   public static string Pattern = "expand_events*.yaml";
   public static List<RandomEvent> Originals = [];
 
@@ -18,7 +19,7 @@ public class Manager
   {
     if (Helper.IsClient()) return;
     if (File.Exists(FilePath)) return;
-    var yaml = DataManager.Serializer().Serialize(RandEventSystem.instance.m_events.Select(Loader.ToData).ToList());
+    var yaml = Yaml.Serializer().Serialize(RandEventSystem.instance.m_events.Select(Loader.ToData).ToList());
     File.WriteAllText(FilePath, yaml);
   }
   public static void FromFile()
@@ -27,7 +28,7 @@ public class Manager
     Set(DataManager.Read(Pattern));
     // No point to send duplicate events to clients.
     var uniqueEvents = RandEventSystem.instance.m_events.Distinct(new Comparer());
-    Configuration.valueEventData.Value = DataManager.Serializer().Serialize(RandEventSystem.instance.m_events.Select(Loader.ToData).ToList());
+    Configuration.valueEventData.Value = Yaml.Serializer().Serialize(RandEventSystem.instance.m_events.Select(Loader.ToData).ToList());
   }
   public static void FromSetting(string yaml)
   {
@@ -41,10 +42,10 @@ public class Manager
     if (yaml == "") return;
     try
     {
-      var data = DataManager.Deserialize<Data>(yaml, FileName).Select(Loader.FromData).ToList();
+      var data = Yaml.Deserialize<Data>(yaml, FileName).Select(Loader.FromData).ToList();
       if (data.Count == 0)
       {
-        EWE.LogWarning($"Failed to load any event data.");
+        Log.Warning($"Failed to load any event data.");
         return;
       }
       if (ExpandWorldData.Configuration.DataMigration && Helper.IsServer() && AddMissingEntries(data))
@@ -52,13 +53,13 @@ public class Manager
         // Watcher triggers reload.
         return;
       }
-      EWE.LogInfo($"Reloading event data ({data.Count} entries).");
+      Log.Info($"Reloading event data ({data.Count} entries).");
       RandEventSystem.instance.m_events = data;
     }
     catch (Exception e)
     {
-      EWE.LogError(e.Message);
-      EWE.LogError(e.StackTrace);
+      Log.Error(e.Message);
+      Log.Error(e.StackTrace);
     }
   }
   private static bool AddMissingEntries(List<RandomEvent> entries)
@@ -68,11 +69,11 @@ public class Manager
       missingKeys.Remove(item.m_name);
     if (missingKeys.Count == 0) return false;
     var missing = Originals.Where(item => missingKeys.Contains(item.m_name)).ToList();
-    EWE.LogWarning($"Adding {missing.Count} missing events to the expand_events.yaml file.");
+    Log.Warning($"Adding {missing.Count} missing events to the expand_events.yaml file.");
     foreach (var item in missing)
-      EWE.LogWarning(item.m_name);
+      Log.Warning(item.m_name);
     var yaml = File.ReadAllText(FilePath);
-    var data = DataManager.Serializer().Serialize(missing.Select(Loader.ToData));
+    var data = Yaml.Serializer().Serialize(missing.Select(Loader.ToData));
     // Directly appending is risky but necessary to keep comments, etc.
     yaml += "\n" + data;
     File.WriteAllText(FilePath, yaml);
@@ -80,7 +81,7 @@ public class Manager
   }
   public static void SetupWatcher()
   {
-    DataManager.SetupWatcher(Pattern, FromFile);
+    Yaml.SetupWatcher(Pattern, FromFile);
   }
 }
 

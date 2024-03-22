@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using Data;
 using ExpandWorldData;
 using HarmonyLib;
 using Service;
@@ -8,7 +9,7 @@ using UnityEngine;
 namespace ExpandWorld.Spawn;
 public class Loader
 {
-  public static Dictionary<SpawnSystem.SpawnData, ZDOData?> Data = [];
+  public static Dictionary<SpawnSystem.SpawnData, DataEntry?> Data = [];
   public static Dictionary<SpawnSystem.SpawnData, List<BlueprintObject>> Objects = [];
   private static readonly int HashFaction = "faction".GetStableHashCode();
 
@@ -52,14 +53,14 @@ public class Loader
       spawn.m_minAltitude = spawn.m_maxAltitude > 0f ? 0f : -1000f;
     if (data.data != "")
     {
-      Data[spawn] = ZDOData.Create(data.data);
+      Data[spawn] = DataHelper.Get(data.data);
     }
     if (data.faction != "")
     {
-      var factionData = new ZDOData();
-      factionData.Strings[HashFaction] = new(data.faction);
+      var factionData = new DataEntry();
+      factionData.Strings[HashFaction] = DataValue.Simple(data.faction);
       if (Data.ContainsKey(spawn))
-        Data[spawn] = ZDOData.Merge(Data[spawn], factionData);
+        Data[spawn] = DataHelper.Merge(Data[spawn], factionData);
       else
         Data.Add(spawn, factionData);
     }
@@ -70,7 +71,7 @@ public class Loader
         Parse.VectorXZY(split, 1),
         Quaternion.identity,
         Vector3.one,
-        ZDOData.Create(split.Length > 5 ? split[5] : ""),
+        DataHelper.Get(split.Length > 5 ? split[5] : ""),
         Parse.Float(split, 4, 1f)
       )).ToList();
     }
@@ -122,15 +123,14 @@ public class SpawnZDO
   static void Prefix(SpawnSystem.SpawnData critter, Vector3 spawnPoint)
   {
     if (!Loader.Data.TryGetValue(critter, out var data)) return;
-    if (!critter.m_prefab.TryGetComponent<ZNetView>(out var view)) return;
-    DataHelper.InitZDO(spawnPoint, Quaternion.identity, null, data, view);
+    DataHelper.Init(critter.m_prefab, spawnPoint, Quaternion.identity, null, data);
   }
 
   private static string PrefabOverride(string prefab)
   {
     return prefab;
   }
-  static ZDOData? DataOverride(ZDOData? data, string prefab) => data;
+  static DataEntry? DataOverride(DataEntry? data, string prefab) => data;
   static void Postfix(SpawnSystem.SpawnData critter, Vector3 spawnPoint)
   {
     if (!Loader.Objects.TryGetValue(critter, out var objects)) return;

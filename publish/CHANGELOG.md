@@ -1,3 +1,6 @@
+- v1.7
+  - Updated for the new Expand World Data features.
+
 - v1.6
   - Updated for the new Expand World Data features.
 
