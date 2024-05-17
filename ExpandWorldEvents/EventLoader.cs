@@ -31,7 +31,11 @@ public class Loader
       m_startMessage = data.startMessage,
       m_endMessage = data.endMessage,
       m_forceMusic = data.forceMusic,
-      m_forceEnvironment = data.forceEnvironment
+      m_forceEnvironment = data.forceEnvironment,
+      m_eventRange = data.radius,
+      m_standaloneChance = data.customChance,
+      m_standaloneInterval = data.customInterval,
+      m_spawnerDelay = data.spawnerDelay,
     };
     ExtraData[random] = new(data);
     return random;
@@ -57,7 +61,11 @@ public class Loader
       startMessage = random.m_startMessage,
       endMessage = random.m_endMessage,
       forceMusic = random.m_forceMusic,
-      forceEnvironment = random.m_forceEnvironment
+      forceEnvironment = random.m_forceEnvironment,
+      radius = random.m_eventRange,
+      customChance = random.m_standaloneChance,
+      customInterval = random.m_standaloneInterval,
+      spawnerDelay = random.m_spawnerDelay,
     };
     return data;
   }

@@ -1,3 +1,7 @@
+- v1.8
+  - Adds new fields `radius`, `spawnerDelay`, `customInterval` and `customChance`.
+  - Fixed for the new patch.
+
 - v1.7
   - Updated for the new Expand World Data features.
 

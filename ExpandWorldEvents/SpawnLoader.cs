@@ -48,6 +48,11 @@ public class Loader
       m_minLevel = data.minLevel,
       m_levelUpMinCenterDistance = data.levelUpMinCenterDistance,
       m_overrideLevelupChance = data.overrideLevelupChance,
+      m_inLava = data.inLava,
+      m_outsideLava = data.outsideLava,
+      m_canSpawnCloseToPlayer = data.canSpawnCloseToPlayer,
+      m_insidePlayerBase = data.insidePlayerBase,
+      m_groundOffsetRandom = data.groundOffsetRandom
     };
     if (spawn.m_minAltitude == -10000f)
       spawn.m_minAltitude = spawn.m_maxAltitude > 0f ? 0f : -1000f;
@@ -111,7 +116,12 @@ public class Loader
       maxLevel = spawn.m_maxLevel,
       minLevel = spawn.m_minLevel,
       levelUpMinCenterDistance = spawn.m_levelUpMinCenterDistance,
-      overrideLevelupChance = spawn.m_overrideLevelupChance
+      overrideLevelupChance = spawn.m_overrideLevelupChance,
+      inLava = spawn.m_inLava,
+      outsideLava = spawn.m_outsideLava,
+      canSpawnCloseToPlayer = spawn.m_canSpawnCloseToPlayer,
+      insidePlayerBase = spawn.m_insidePlayerBase,
+      groundOffsetRandom = spawn.m_groundOffsetRandom
     };
     return data;
   }

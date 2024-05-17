@@ -36,7 +36,7 @@ public class ExtraChecks
   private static bool PlayerCheck(Vector3 pos, Range<int>? limit, float distance)
   {
     if (limit == null) return true;
-    var within = RandEventSystem.RefreshPlayerEventData().Where(p => Utils.DistanceXZ(pos, p.position) <= distance).Count();
+    var within = RandEventSystem.s_playerEventDatas.Where(p => Utils.DistanceXZ(pos, p.position) <= distance).Count();
     return limit.Min <= within && within <= limit.Max;
   }
   private static bool EventCheck(Vector3 pos, Range<int>? limit)

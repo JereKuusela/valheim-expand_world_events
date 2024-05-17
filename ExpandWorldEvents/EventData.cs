@@ -9,8 +9,16 @@ public class Data
   public string name = "";
   [DefaultValue(true)]
   public bool enabled = true;
+  [DefaultValue(0f)]
+  public float customChance = 0f;
+  [DefaultValue(0f)]
+  public float customInterval = 0f;
   [DefaultValue(60f)]
   public float duration = 60f;
+  [DefaultValue(96f)]
+  public float radius = 96f;
+  [DefaultValue(0f)]
+  public float spawnerDelay = 0f;
   [DefaultValue("3")]
   public string nearBaseOnly = "3";
   [DefaultValue("")]

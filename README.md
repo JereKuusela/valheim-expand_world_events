@@ -61,6 +61,10 @@ Client side fields:
 - **notRequiredPlayerKeys**: Event is not available if the player has any of these keys.
 - **requiredKnownItems**: Event becomes available if the player knows any of these items.
 - **notRequiredKnownItems**: Event is not available if the player knows any of these items.
+- **radius**: Event area radius.
+  - Default value is `96` meters.
+- **spawnerDelay**: Delay before the event starts spawning.
+  - Default value is `0` seconds.
 
 Server side fields:
 
@@ -90,6 +94,10 @@ Server side fields:
   - Requires **Multiple events** to be enabled. The distance is **Minimum distance between events**.
   - Recommended to enable **Check per player**. Otherwise multiple events can't trigger at the same time.
   - This can be used to trigger stronger events when multiple events trigger at the same time.
+- **customInterval**: Event specific interval.
+  - If set, a separate timer is used for this event.
+  - However the event can also trigger from the global interval.
+- **customChance**: Event specific chance.
 
 ### Player limit / event limit
 

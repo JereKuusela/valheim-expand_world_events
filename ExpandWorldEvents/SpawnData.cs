@@ -49,6 +49,14 @@ public class Data
   public bool inForest = true;
   [DefaultValue(true)]
   public bool outsideForest = true;
+  [DefaultValue(false)]
+  public bool canSpawnCloseToPlayer = false;
+  [DefaultValue(false)]
+  public bool insidePlayerBase = false;
+  [DefaultValue(false)]
+  public bool inLava = false;
+  [DefaultValue(true)]
+  public bool outsideLava = true;
   [DefaultValue(0f)]
   public float minOceanDepth = 0f;
   [DefaultValue(0f)]
@@ -57,6 +65,8 @@ public class Data
   public bool huntPlayer = false;
   [DefaultValue(0.5f)]
   public float groundOffset = 0.5f;
+  [DefaultValue(0f)]
+  public float groundOffsetRandom = 0f;
   [DefaultValue(0f)]
   public float levelUpMinCenterDistance = 0f;
   [DefaultValue(-1f)]
