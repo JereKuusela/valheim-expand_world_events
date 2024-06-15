@@ -49,7 +49,7 @@ public class Loader
       enabled = random.m_enabled,
       random = random.m_random,
       duration = random.m_duration,
-      nearBaseOnly = random.m_nearBaseOnly ? "3" : "0",
+      nearBaseOnly = random.m_nearBaseOnly ? "true" : "false",
       pauseIfNoPlayerInArea = random.m_pauseIfNoPlayerInArea,
       biome = DataManager.FromBiomes(random.m_biome),
       requiredGlobalKeys = DataManager.FromList(random.m_requiredGlobalKeys),

@@ -1,3 +1,7 @@
+- v1.9
+  - Adds a new field `outsideBaseOnly`.
+  - Fixes compatibility issue with RRR mod.
+
 - v1.8
   - Adds new fields `radius`, `spawnerDelay`, `customInterval` and `customChance`.
   - Fixed for the new patch.

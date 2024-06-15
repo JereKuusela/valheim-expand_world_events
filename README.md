@@ -72,9 +72,13 @@ Server side fields:
   - Default value is `true`.
 - **duration**: How long the event lasts.
   - Default value is `60` seconds.
-- **nearBaseOnly**: How many player base items are required within 40 meters.
-  - Default value is `3` items.
-  - Value `true` counts as 3 items and `false` as 0 items.
+- **nearBaseOnly**: Minimum amount of player base structures within 40 meters.
+  - Default value `true` is `3` structures, so the event can only trigger with at least 3 nearby structures.
+  - Value `false` is 0 structures.
+- **outsideBaseOnly**: Maximum amount of player base structures within 40 meters.
+  - Default value `false` ignores this check.
+  - Value `true` is 2 structures, so the event can only trigger with up to 2 nearby structures.
+  - Using this automatically disables **nearBaseOnly**.
 - **pauseIfNoPlayerInArea**: The event timer pauses if no player in the area.
   - Default value is `true`.
 - **biome**: List of required biomes.

@@ -30,8 +30,11 @@ public class Manager
     var uniqueEvents = RandEventSystem.instance.m_events.Distinct(new Comparer());
     Configuration.valueEventData.Value = Yaml.Serializer().Serialize(RandEventSystem.instance.m_events.Select(Loader.ToData).ToList());
   }
+  public static bool LoadDelayed = false;
   public static void FromSetting(string yaml)
   {
+    // First load is delayed because RRR uses ServerSync to create monsters (race condition).
+    if (LoadDelayed) return;
     if (Helper.IsClient()) Set(yaml);
   }
   private static void Set(string yaml)
@@ -85,6 +88,14 @@ public class Manager
   }
 }
 
+[HarmonyPatch(typeof(ZNet), nameof(ZNet.Awake))]
+public class DelayContentLoad
+{
+  static void Prefix()
+  {
+    Manager.LoadDelayed = true;
+  }
+}
 
 [HarmonyPatch(typeof(ZoneSystem), nameof(ZoneSystem.Start)), HarmonyPriority(Priority.Last)]
 public class InitializeContent
@@ -95,6 +106,11 @@ public class InitializeContent
     {
       Manager.ToFile();
       Manager.FromFile();
+    }
+    else if (Manager.LoadDelayed)
+    {
+      Manager.LoadDelayed = false;
+      Manager.FromSetting(Configuration.valueEventData.Value);
     }
   }
 }

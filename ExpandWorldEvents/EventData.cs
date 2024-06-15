@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using ExpandWorldData;
@@ -19,8 +20,10 @@ public class Data
   public float radius = 96f;
   [DefaultValue(0f)]
   public float spawnerDelay = 0f;
-  [DefaultValue("3")]
-  public string nearBaseOnly = "3";
+  [DefaultValue("false")]
+  public string outsideBaseOnly = "false";
+  [DefaultValue("true")]
+  public string nearBaseOnly = "true";
   [DefaultValue("")]
   public string biome = "";
   [DefaultValue("")]
@@ -67,7 +70,8 @@ public class ExtraData
   public List<string> RequiredEnvironments = [];
   public float PlayerDistance = 100f;
   public Range<int>? PlayerLimit;
-  public int BaseValue = 3;
+  public int MinBaseValue = 3;
+  public int MaxBaseValue = int.MaxValue;
   public Range<int>? EventLimit;
   public string[]? StartCommands;
   public string[]? EndCommands;
@@ -81,7 +85,12 @@ public class ExtraData
     if (data.eventLimit != "")
       EventLimit = Parse.IntRange(data.eventLimit);
     if (data.nearBaseOnly != "true")
-      BaseValue = Parse.Int(data.nearBaseOnly, 0);
+      MinBaseValue = Parse.Int(data.nearBaseOnly, 0);
+    if (data.outsideBaseOnly != "false")
+    {
+      MaxBaseValue = Parse.Int(data.outsideBaseOnly, 2);
+      MinBaseValue = 0;
+    }
     StartCommands = data.startCommands;
     EndCommands = data.endCommands;
   }

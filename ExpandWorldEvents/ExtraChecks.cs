@@ -54,7 +54,7 @@ public class CheckBase
   static bool Prefix(RandomEvent ev, RandEventSystem.PlayerEventData player, ref bool __result)
   {
     if (!Loader.ExtraData.TryGetValue(ev, out var data)) return true;
-    __result = player.baseValue >= data.BaseValue;
+    __result = player.baseValue >= data.MinBaseValue && player.baseValue <= data.MaxBaseValue;
     return false;
   }
 }
