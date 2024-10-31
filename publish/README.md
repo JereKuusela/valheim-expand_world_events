@@ -12,6 +12,17 @@ Some features only require server installation.
 
 See [documentation](https://github.com/JereKuusela/valheim-expand_world_events/blob/main/README.md).
 
+## Migration
+
+Bog Witch update added a new field `requiredPlayerKeysAll`.
+
+Recommended:
+
+- Back your changes.
+- Remove the old `expand_events.yaml` file.
+- Let the mod create a new one.
+- Apply your changes to the new file.
+
 ## Credits
 
 Thanks for Azumatt for creating the mod icon!

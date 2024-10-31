@@ -33,6 +33,8 @@ public class Data
   [DefaultValue("")]
   public string requiredPlayerKeys = "";
   [DefaultValue("")]
+  public string requiredPlayerKeysAll = "";
+  [DefaultValue("")]
   public string notRequiredPlayerKeys = "";
   [DefaultValue("")]
   public string requiredKnownItems = "";

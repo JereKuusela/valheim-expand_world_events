@@ -1,3 +1,6 @@
+- v1.11
+  - Adds a new field `requiredPlayerKeysAll`.
+
 - v1.10
   - Fixed for the new game version.
 
