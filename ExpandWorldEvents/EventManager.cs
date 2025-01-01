@@ -42,7 +42,7 @@ public class Manager
     if (Helper.IsServer() && Originals.Count == 0)
       Originals = [.. RandEventSystem.instance.m_events];
     Loader.ExtraData.Clear();
-    if (yaml == "") return;
+    if (string.IsNullOrEmpty(yaml)) return;
     try
     {
       var data = Yaml.Deserialize<Data>(yaml, FileName).Select(Loader.FromData).ToList();
@@ -107,12 +107,23 @@ public class InitializeContent
       Manager.ToFile();
       Manager.FromFile();
     }
-    else if (Manager.LoadDelayed)
+  }
+}
+
+
+[HarmonyPatch(typeof(SpawnSystem), nameof(SpawnSystem.Awake))]
+public class InitializeClientContent
+{
+  // Not the best place but same as Expand World Spawns.
+  static void Postfix()
+  {
+    if (Manager.LoadDelayed)
     {
       Manager.LoadDelayed = false;
       Manager.FromSetting(Configuration.valueEventData.Value);
     }
   }
+
 }
 
 public class Comparer : IEqualityComparer<RandomEvent>

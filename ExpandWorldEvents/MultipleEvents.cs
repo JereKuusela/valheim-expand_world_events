@@ -58,7 +58,7 @@ public class MultipleEvents
     if (ev == null)
     {
       // For stopevent command.
-      // Copy becasuse OnStop() can start new events.
+      // Copy because OnStop() can start new events.
       var toStop = Events.ToList();
       toStop.ForEach(x => x.Event.OnStop());
       Events.RemoveAll(toStop.Contains);
