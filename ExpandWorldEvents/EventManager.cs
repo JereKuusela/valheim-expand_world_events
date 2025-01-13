@@ -25,7 +25,7 @@ public class Manager
   public static void FromFile()
   {
     if (Helper.IsClient()) return;
-    Set(DataManager.Read(Pattern));
+    Set(DataManager.Read<Data, RandomEvent>(Pattern, Loader.FromData));
     // No point to send duplicate events to clients.
     var uniqueEvents = RandEventSystem.instance.m_events.Distinct(new Comparer());
     Configuration.valueEventData.Value = Yaml.Serializer().Serialize(RandEventSystem.instance.m_events.Select(Loader.ToData).ToList());
@@ -45,7 +45,7 @@ public class Manager
     if (string.IsNullOrEmpty(yaml)) return;
     try
     {
-      var data = Yaml.Deserialize<Data>(yaml, FileName).Select(Loader.FromData).ToList();
+      var data = Yaml.Deserialize<Data>(yaml, "Events").Select(d => Loader.FromData(d, "Events")).ToList();
       if (data.Count == 0)
       {
         Log.Warning($"Failed to load any event data.");

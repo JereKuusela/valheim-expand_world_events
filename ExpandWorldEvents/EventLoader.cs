@@ -8,18 +8,18 @@ public class Loader
 {
   public static Dictionary<RandomEvent, ExtraData> ExtraData = [];
 
-  public static RandomEvent FromData(Data data)
+  public static RandomEvent FromData(Data data, string fileName)
   {
     RandomEvent random = new()
     {
       m_name = data.name,
-      m_spawn = data.spawns.Select(Spawn.Loader.FromData).Where(s => s.m_prefab).ToList(),
+      m_spawn = data.spawns.Select(d => Spawn.Loader.FromData(d, fileName)).Where(s => s.m_prefab).ToList(),
       m_enabled = data.enabled,
       m_random = data.random,
       m_duration = data.duration,
       m_nearBaseOnly = data.nearBaseOnly != "false",
       m_pauseIfNoPlayerInArea = data.pauseIfNoPlayerInArea,
-      m_biome = DataManager.ToBiomes(data.biome),
+      m_biome = DataManager.ToBiomes(data.biome, fileName),
       m_requiredGlobalKeys = DataManager.ToList(data.requiredGlobalKeys),
       m_notRequiredGlobalKeys = DataManager.ToList(data.notRequiredGlobalKeys),
       m_altRequiredPlayerKeysAny = DataManager.ToList(data.requiredPlayerKeys),

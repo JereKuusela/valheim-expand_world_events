@@ -1,3 +1,6 @@
+- v1.13
+  - Improves the config loading to show the actual file and row numbers when an error occurs.
+
 - v1.12
   - Fixes possible error when joining a server.
 
