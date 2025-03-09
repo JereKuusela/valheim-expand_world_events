@@ -1,10 +1,10 @@
 {
   "name": "Expand_World_Events",
-  "version_number": "1.13.0",
+  "version_number": "1.14.0",
   "website_url": "https://github.com/JereKuusela/valheim-expand_world_events",
   "description": "Allows configuring random event system.",
   "dependencies": [
     "denikson-BepInExPack_Valheim-5.4.2202",
-    "JereKuusela-Expand_World_Data-1.50.0"
+    "JereKuusela-Expand_World_Data-1.52.0"
   ]
 }

@@ -1,3 +1,6 @@
+- v1.14
+  - Fixed for the new update.
+
 - v1.13
   - Improves the config loading to show the actual file and row numbers when an error occurs.
 
@@ -9,11 +12,3 @@
 
 - v1.10
   - Fixed for the new game version.
-
-- v1.9
-  - Adds a new field `outsideBaseOnly`.
-  - Fixes compatibility issue with RRR mod.
-
-- v1.8
-  - Adds new fields `radius`, `spawnerDelay`, `customInterval` and `customChance`.
-  - Fixed for the new patch.
