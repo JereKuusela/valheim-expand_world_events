@@ -18,6 +18,7 @@ public class Loader
     SpawnSystem.SpawnData spawn = new()
     {
       m_prefab = DataManager.ToPrefab(data.prefab, fileName),
+      m_name = data.name,
       m_enabled = data.enabled,
       m_biome = DataManager.ToBiomes(data.biome, fileName),
       m_biomeArea = DataManager.ToBiomeAreas(data.biomeArea, fileName),
@@ -52,7 +53,9 @@ public class Loader
       m_outsideLava = data.outsideLava,
       m_canSpawnCloseToPlayer = data.canSpawnCloseToPlayer,
       m_insidePlayerBase = data.insidePlayerBase,
-      m_groundOffsetRandom = data.groundOffsetRandom
+      m_groundOffsetRandom = data.groundOffsetRandom,
+      m_minDistanceFromCenter = data.minDistance,
+      m_maxDistanceFromCenter = data.maxDistance,
     };
     if (spawn.m_minAltitude == -10000f)
       spawn.m_minAltitude = spawn.m_maxAltitude > 0f ? 0f : -1000f;
@@ -62,8 +65,10 @@ public class Loader
     }
     if (data.faction != "")
     {
-      DataEntry factionData = new();
-      factionData.Strings ??= [];
+      var factionData = new DataEntry
+      {
+        Strings = []
+      };
       factionData.Strings[HashFaction] = DataValue.Simple(data.faction);
       if (Data.ContainsKey(spawn))
         Data[spawn] = DataHelper.Merge(Data[spawn], factionData);
@@ -88,6 +93,7 @@ public class Loader
     Data data = new()
     {
       prefab = spawn.m_prefab.name,
+      name = spawn.m_name,
       enabled = spawn.m_enabled,
       biome = DataManager.FromBiomes(spawn.m_biome),
       biomeArea = DataManager.FromBiomeAreas(spawn.m_biomeArea),
@@ -122,7 +128,9 @@ public class Loader
       outsideLava = spawn.m_outsideLava,
       canSpawnCloseToPlayer = spawn.m_canSpawnCloseToPlayer,
       insidePlayerBase = spawn.m_insidePlayerBase,
-      groundOffsetRandom = spawn.m_groundOffsetRandom
+      groundOffsetRandom = spawn.m_groundOffsetRandom,
+      minDistance = spawn.m_minDistanceFromCenter,
+      maxDistance = spawn.m_maxDistanceFromCenter,
     };
     return data;
   }

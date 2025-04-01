@@ -4,8 +4,9 @@ namespace ExpandWorld.Spawn;
 public class Data
 {
   public string prefab = "";
-  [DefaultValue(true)]
   public bool enabled = true;
+  [DefaultValue("")]
+  public string name = "";
   [DefaultValue("")]
   public string biome = "";
   [DefaultValue("")]
@@ -71,10 +72,15 @@ public class Data
   public float levelUpMinCenterDistance = 0f;
   [DefaultValue(-1f)]
   public float overrideLevelupChance = -1f;
+  [DefaultValue(0f)]
+  public float minDistance = 0f;
+  [DefaultValue(0f)]
+  public float maxDistance = 0f;
   [DefaultValue("")]
   public string faction = "";
   [DefaultValue("")]
   public string data = "";
+
   [DefaultValue(null)]
   public string[]? objects = null;
 }

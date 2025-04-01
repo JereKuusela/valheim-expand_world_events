@@ -12,7 +12,7 @@ public class EWE : BaseUnityPlugin
 {
   public const string GUID = "expand_world_events";
   public const string NAME = "Expand World Events";
-  public const string VERSION = "1.14";
+  public const string VERSION = "1.15";
 
   public static ServerSync.ConfigSync ConfigSync = new(GUID)
   {
