@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.ComponentModel;
 namespace ExpandWorld.Spawn;
 
@@ -76,11 +77,15 @@ public class Data
   public float minDistance = 0f;
   [DefaultValue(0f)]
   public float maxDistance = 0f;
-  [DefaultValue("")]
-  public string faction = "";
-  [DefaultValue("")]
-  public string data = "";
 
   [DefaultValue(null)]
   public string[]? objects = null;
+
+
+  [DefaultValue(null)]
+  public string? data = null;
+  [DefaultValue(null)]
+  public string? faction = null;
+  [DefaultValue(null)]
+  public Dictionary<string, string>? fields = null;
 }

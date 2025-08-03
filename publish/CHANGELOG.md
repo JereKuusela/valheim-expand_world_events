@@ -1,3 +1,6 @@
+- v1.16
+  - Adds support for data fields to allow customizing creature properties.
+
 - v1.15
   - Fixed for the new update.
 

@@ -16,17 +16,6 @@ Some features only require server installation.
 
 Server side mode can be enabled from Expand World Data config.
 
-## Migration
-
-Bog Witch update added a new field `requiredPlayerKeysAll`.
-
-Recommended:
-
-- Back your changes.
-- Remove the old `expand_events.yaml` file.
-- Let the mod create a new one.
-- Apply your changes to the new file.
-
 ## Configuration
 
 See the [wiki](https://valheim.fandom.com/wiki/Events) for more info about events.

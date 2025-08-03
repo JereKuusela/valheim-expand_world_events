@@ -7,6 +7,7 @@ using Service;
 using UnityEngine;
 
 namespace ExpandWorld.Spawn;
+
 public class Loader
 {
   public static Dictionary<SpawnSystem.SpawnData, DataEntry?> Data = [];
@@ -59,21 +60,15 @@ public class Loader
     };
     if (spawn.m_minAltitude == -10000f)
       spawn.m_minAltitude = spawn.m_maxAltitude > 0f ? 0f : -1000f;
-    if (data.data != "")
-    {
+    if (data.data != null)
       Data[spawn] = DataHelper.Get(data.data, fileName);
-    }
-    if (data.faction != "")
+    var customData = LoaderFields.HandleCustomData(data, spawn);
+    if (customData != null)
     {
-      var factionData = new DataEntry
-      {
-        Strings = []
-      };
-      factionData.Strings[HashFaction] = DataValue.Simple(data.faction);
       if (Data.ContainsKey(spawn))
-        Data[spawn] = DataHelper.Merge(Data[spawn], factionData);
+        Data[spawn] = DataHelper.Merge(Data[spawn], customData);
       else
-        Data.Add(spawn, factionData);
+        Data.Add(spawn, customData);
     }
     if (data.objects != null)
     {
