@@ -53,6 +53,7 @@ Client side fields:
 - **spawns**: List of spawned objects.
   - See [Expand World Spawns](https://github.com/JereKuusela/valheim-expand_world_spawns/#Configuration) for more info.
   - Usually these have lower spawn times and less restrictions compared to normal spawns.
+  - Supports custom data fields like Expand World Spawns. The mod attempts to find the correct component and data type automatically. If needed, specify the component with `component.field` (for example `Character.m_boss`) or the data type with `type.key` (for example `float.health`).
 - **startMessage**: Message shown on the screen during the event.
 - **endMessage**: Message shown on the screen when the event ends.
 - **forceMusic**: Event music.

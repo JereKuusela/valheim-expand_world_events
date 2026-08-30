@@ -1,4 +1,4 @@
-- v1.16
+- v1.17
   - Adds support for data fields to allow customizing creature properties.
 
 - v1.15
@@ -15,6 +15,3 @@
 
 - v1.11
   - Adds a new field `requiredPlayerKeysAll`.
-
-- v1.10
-  - Fixed for the new game version.

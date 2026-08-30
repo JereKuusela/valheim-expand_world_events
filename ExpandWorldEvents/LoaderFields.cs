@@ -12,7 +12,51 @@ public class LoaderFields
   private static readonly int HashDamage = "damage".GetStableHashCode();
   private static readonly HashSet<int> KnownFloats =
   [
-    ZDOVars.s_randomSkillFactor, HashDamage
+    ZDOVars.s_randomSkillFactor,
+    HashDamage,
+    ZDOVars.s_health,
+    ZDOVars.s_maxHealth,
+    ZDOVars.s_noise,
+    ZDOVars.s_scaleScalarHash,
+  ];
+  private static readonly HashSet<int> KnownInts =
+  [
+    ZDOVars.s_level,
+    ZDOVars.s_seed,
+    ZDOVars.s_lovePoints
+  ];
+  private static readonly HashSet<int> KnownLongs =
+  [
+    ZDOVars.s_spawnTime,
+    ZDOVars.s_worldTimeHash,
+    ZDOVars.s_pregnant
+  ];
+  private static readonly HashSet<int> KnownBools =
+  [
+    "bosscount".GetStableHashCode(),
+    ZDOVars.s_isBlockingHash,
+    ZDOVars.s_tamed,
+    ZDOVars.s_aggravated,
+    ZDOVars.s_alert,
+    ZDOVars.s_shownAlertMessage,
+    ZDOVars.s_huntPlayer,
+    ZDOVars.s_patrol,
+    ZDOVars.s_despawnInDay,
+    ZDOVars.s_eventCreature,
+    ZDOVars.s_sleeping,
+    ZDOVars.s_haveSaddleHash
+  ];
+  private static readonly HashSet<int> KnownVecs =
+  [
+    ZDOVars.s_bodyVelocity,
+    ZDOVars.s_spawnPoint,
+    ZDOVars.s_patrolPoint,
+    ZDOVars.s_scaleHash
+  ];
+  private static readonly HashSet<int> KnownStrings =
+  [
+    ZDOVars.s_tamedName,
+    ZDOVars.s_tamedNameAuthor
   ];
 
   public static DataEntry? HandleCustomData(Data data, SpawnSystem.SpawnData spawn)
@@ -37,22 +81,80 @@ public class LoaderFields
           customData.Floats ??= [];
           if (hash == HashDamage)
             hash = ZDOVars.s_randomSkillFactor;
-          customData.Floats[hash] = DataValue.Simple(Parse.Float(kvp.Value, 0f));
+          customData.Floats[hash] = DataValue.Float(kvp.Value);
+        }
+        else if (KnownInts.Contains(hash))
+        {
+          customData.Ints ??= [];
+          customData.Ints[hash] = DataValue.Int(kvp.Value);
+        }
+        else if (KnownLongs.Contains(hash))
+        {
+          customData.Longs ??= [];
+          customData.Longs[hash] = DataValue.Long(kvp.Value);
+        }
+        else if (KnownBools.Contains(hash))
+        {
+          customData.Bools ??= [];
+          customData.Bools[hash] = DataValue.Bool(kvp.Value);
+        }
+        else if (KnownVecs.Contains(hash))
+        {
+          customData.Vecs ??= [];
+          customData.Vecs[hash] = DataValue.Vector3(kvp.Value);
+        }
+        else if (KnownStrings.Contains(hash))
+        {
+          customData.Strings ??= [];
+          customData.Strings[hash] = DataValue.String(kvp.Value);
         }
         else
         {
-          // Component fields almost always start with m_.
-          // So both formats have to be supported.
           var split = kvp.Key.Split('.');
           if (split.Length > 1)
           {
-            componentFields[split[0]] ??= [];
-            componentFields[split[0]][split[1]] = kvp.Value;
-            componentFields[split[0]][$"m_{split[1]}"] = kvp.Value;
-
+            var c = split[0];
+            if (c == "int")
+            {
+              customData.Ints ??= [];
+              customData.Ints[split[1].GetStableHashCode()] = DataValue.Int(kvp.Value);
+            }
+            else if (c == "float")
+            {
+              customData.Floats ??= [];
+              customData.Floats[split[1].GetStableHashCode()] = DataValue.Float(kvp.Value);
+            }
+            else if (c == "bool")
+            {
+              customData.Bools ??= [];
+              customData.Bools[split[1].GetStableHashCode()] = DataValue.Bool(kvp.Value);
+            }
+            else if (c == "vec")
+            {
+              customData.Vecs ??= [];
+              customData.Vecs[split[1].GetStableHashCode()] = DataValue.Vector3(kvp.Value);
+            }
+            else if (c == "quat")
+            {
+              customData.Quats ??= [];
+              customData.Quats[split[1].GetStableHashCode()] = DataValue.Quaternion(kvp.Value);
+            }
+            else if (c == "string")
+            {
+              customData.Strings ??= [];
+              customData.Strings[split[1].GetStableHashCode()] = DataValue.Simple(kvp.Value);
+            }
+            else
+            {
+              if (!componentFields.ContainsKey(c))
+                componentFields[c] = [];
+              componentFields[c][split[1]] = kvp.Value;
+            }
           }
           else
           {
+            // Component fields almost always start with m_.
+            // So both formats have to be supported for easier usage.
             otherFields[kvp.Key] = kvp.Value;
             otherFields[$"m_{kvp.Key}"] = kvp.Value;
           }
@@ -68,10 +170,11 @@ public class LoaderFields
     spawn.m_prefab.GetComponentsInChildren(ZNetView.m_tempComponents);
     foreach (var component in ZNetView.m_tempComponents)
     {
-      var f = component.GetType().GetFields(BindingFlags.Instance | BindingFlags.Public);
+      var c = component.GetType();
+      var f = c.GetFields(BindingFlags.Instance | BindingFlags.Public);
       foreach (var info in f)
       {
-        if (componentFields.TryGetValue(info.Name, out var fields) && fields.TryGetValue(info.Name, out var value))
+        if (componentFields.TryGetValue(c.Name, out var fields) && fields.TryGetValue(info.Name, out var value))
           InsertData(customData, component, info, value);
         if (otherFields.TryGetValue(info.Name, out var otherValue))
           InsertData(customData, component, info, otherValue);
@@ -88,28 +191,27 @@ public class LoaderFields
     if (info.FieldType == typeof(int))
     {
       customData.Ints ??= [];
-      customData.Ints[key] = DataValue.Simple(Parse.Int(value, 0));
+      customData.Ints[key] = DataValue.Int(value);
     }
     else if (info.FieldType == typeof(float))
     {
       customData.Floats ??= [];
-      customData.Floats[key] = DataValue.Simple(Parse.Float(value, 0f));
+      customData.Floats[key] = DataValue.Float(value);
     }
     else if (info.FieldType == typeof(bool))
     {
-      customData.Ints ??= [];
-      var b = value == "1" || value == "true";
-      customData.Ints[key] = DataValue.Simple(b ? 1 : 0);
+      customData.Bools ??= [];
+      customData.Bools[key] = DataValue.Bool(value);
     }
     else if (info.FieldType == typeof(Vector3))
     {
       customData.Vecs ??= [];
-      customData.Vecs[key] = DataValue.Simple(Parse.VectorXZY(value));
+      customData.Vecs[key] = DataValue.Vector3(value);
     }
     else if (info.FieldType == typeof(Quaternion))
     {
       customData.Quats ??= [];
-      customData.Quats[key] = DataValue.Simple(Parse.AngleYXZ(value));
+      customData.Quats[key] = DataValue.Quaternion(value);
     }
     // Rest are considered strings to support possible custom types.
     else
