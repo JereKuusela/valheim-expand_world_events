@@ -22,7 +22,7 @@ public class ExtraChecks
   private static bool EnvCheck(Vector3 pos, List<string> required)
   {
     if (required.Count == 0) return true;
-    var biome = WorldGenerator.instance.GetBiome(pos);
+    var biome = WorldGenerator.instance.GetBiomeSector(pos);
     var em = EnvMan.instance;
     var availableEnvironments = em.GetAvailableEnvironments(biome);
     if (availableEnvironments == null || availableEnvironments.Count == 0) return false;
@@ -36,7 +36,7 @@ public class ExtraChecks
   private static bool PlayerCheck(Vector3 pos, Range<int>? limit, float distance)
   {
     if (limit == null) return true;
-    var within = RandEventSystem.s_playerEventDatas.Where(p => Utils.DistanceXZ(pos, p.position) <= distance).Count();
+    var within = RandEventSystem.s_playerEventDatas.Count(p => Utils.DistanceXZ(pos, p.position) <= distance);
     return limit.Min <= within && within <= limit.Max;
   }
   private static bool EventCheck(Vector3 pos, Range<int>? limit)

@@ -1,3 +1,6 @@
+- v1.18
+  - Fixes for the new update.
+
 - v1.17
   - Adds support for data fields to allow customizing creature properties.
 
@@ -9,9 +12,3 @@
 
 - v1.13
   - Improves the config loading to show the actual file and row numbers when an error occurs.
-
-- v1.12
-  - Fixes possible error when joining a server.
-
-- v1.11
-  - Adds a new field `requiredPlayerKeysAll`.

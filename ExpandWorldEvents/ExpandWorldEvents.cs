@@ -8,12 +8,12 @@ using UnityEngine;
 namespace ExpandWorld;
 
 [BepInPlugin(GUID, NAME, VERSION)]
-[BepInDependency("expand_world_data", "1.70")]
+[BepInDependency("expand_world_data", "1.71")]
 public class EWE : BaseUnityPlugin
 {
   public const string GUID = "expand_world_events";
   public const string NAME = "Expand World Events";
-  public const string VERSION = "1.17";
+  public const string VERSION = "1.18";
 
   public static ServerSync.ConfigSync ConfigSync = new(GUID)
   {
