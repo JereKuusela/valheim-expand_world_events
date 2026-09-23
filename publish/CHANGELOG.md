@@ -1,3 +1,6 @@
+- v1.19
+  - **DEPRECATED**: All functionality moved to Expand World Data.
+
 - v1.18
   - Fixes for the new update.
 

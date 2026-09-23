@@ -20,29 +20,5 @@
     <Reference Include="UnityEngine.CoreModule">
       <HintPath>..\..\Libs\UnityEngine.CoreModule.dll</HintPath>
     </Reference>
-    <Reference Include="UnityEngine.UI">
-      <HintPath>..\..\Libs\UnityEngine.UI.dll</HintPath>
-    </Reference>
-    <Reference Include="0Harmony">
-      <HintPath>..\..\Libs\0Harmony.dll</HintPath>
-    </Reference>
-    <Reference Include="BepInEx.Harmony">
-      <HintPath>..\..\Libs\BepInEx.Harmony.dll</HintPath>
-    </Reference>
-    <Reference Include="assembly_valheim">
-      <HintPath>..\..\Libs\assembly_valheim.dll</HintPath>
-    </Reference>
-    <Reference Include="assembly_utils">
-      <HintPath>..\..\Libs\assembly_utils.dll</HintPath>
-    </Reference>
-    <Reference Include="assembly_guiutils">
-      <HintPath>..\..\Libs\assembly_guiutils.dll</HintPath>
-    </Reference>
-    <Reference Include="ExpandWorldData">
-      <HintPath>..\..\Libs\ExpandWorldData.dll</HintPath>
-    </Reference>
-    <Reference Include="YamlDotNet">
-      <HintPath>..\..\Libs\YamlDotNet.dll</HintPath>
-    </Reference>
   </ItemGroup>
 </Project>

@@ -1,33 +1,5 @@
 # Expand World Events
 
-Allows configuring the random event system.
+**⚠️ DEPRECATED - This mod is no longer maintained.** All event functionality has been merged into Expand World Data (which you have already installed).
 
-Install on all clients and the server (modding [guide](https://youtu.be/L9ljm2eKLrk)).
-
-Install [Expand World Data](https://valheim.thunderstore.io/package/JereKuusela/Expand_World_Data/).
-
-Some features only require server installation.
-
-## Usage
-
-See [documentation](https://github.com/JereKuusela/valheim-expand_world_events/blob/main/README.md).
-
-## Migration
-
-Bog Witch update added a new field `requiredPlayerKeysAll`.
-
-Recommended:
-
-- Back your changes.
-- Remove the old `expand_events.yaml` file.
-- Let the mod create a new one.
-- Apply your changes to the new file.
-
-## Credits
-
-Thanks for Azumatt for creating the mod icon!
-
-Thanks for blaxxun for creating the server sync!
-
-Sources: [GitHub](https://github.com/JereKuusela/valheim-expand_world_events)
-Donations: [Buy me a computer](https://www.buymeacoffee.com/jerekuusela)
+This plugin is now a compatibility shim. It will automatically enable event features in Expand World Data if detected. **You can safely uninstall this mod** and continue using events through Expand World Data.
